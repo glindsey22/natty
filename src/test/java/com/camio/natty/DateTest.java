@@ -5,7 +5,7 @@ import com.camio.natty.DateGroup;
 import com.camio.natty.ParseLocation;
 import com.camio.natty.Parser;
 import junit.framework.Assert;
-import org.apache.log4j.Level;
+// import org.apache.log4j.Level;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -376,7 +376,7 @@ public class DateTest extends AbstractTest {
 
     String value="easter '06";
 
-    org.apache.log4j.Logger.getRootLogger().setLevel(Level.INFO);
+//    org.apache.log4j.Logger.getRootLogger().setLevel(Level.INFO);
 
     Parser parser = new Parser();
     List<DateGroup> groups = parser.parse(value);
