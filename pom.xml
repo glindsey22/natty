@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.joestelmach</groupId>
+  <groupId>com.camio</groupId>
   <artifactId>natty</artifactId>
   <packaging>jar</packaging>
   <version>0.14-SNAPSHOT</version>
@@ -15,62 +15,80 @@
     </license>
   </licenses>
   
-  <scm>
-    <connection>scm:git:git@github.com:joestelmach/natty.git</connection>
-    <url>scm:git:git@github.com:joestelmach/natty.git</url>
-    <developerConnection>scm:git:git@github.com:joestelmach/natty.git</developerConnection>  
-  </scm>
-  
-  <developers>
-    <developer>
-      <id>joe</id>
-      <name>Joe Stelmach</name>
-      <email>joestelmach@gmail.com</email>
-      <url>http://github.com/joestelmach</url>
-      <roles>
-        <role>developer</role>
-      </roles>
-      <timezone>-5</timezone>
-    </developer>
-  </developers>
+<!--  <scm>-->
+<!--    <connection>scm:git:git@github.com:joestelmach/natty.git</connection>-->
+<!--    <url>scm:git:git@github.com:joestelmach/natty.git</url>-->
+<!--    <developerConnection>scm:git:git@github.com:joestelmach/natty.git</developerConnection>  -->
+<!--  </scm>-->
+<!--  -->
+<!--  <developers>-->
+<!--    <developer>-->
+<!--      <id>joe</id>-->
+<!--      <name>Joe Stelmach</name>-->
+<!--      <email>joestelmach@gmail.com</email>-->
+<!--      <url>http://github.com/joestelmach</url>-->
+<!--      <roles>-->
+<!--        <role>developer</role>-->
+<!--      </roles>-->
+<!--      <timezone>-5</timezone>-->
+<!--    </developer>-->
+<!--  </developers>-->
   
   <properties>
-    <grammar.dir>${basedir}/src/main/antlr3/com/joestelmach/natty/generated</grammar.dir>
+    <grammar.dir>${basedir}/src/main/antlr3/com/camio/natty/generated</grammar.dir>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <additionalparam>-Xdoclint:none</additionalparam>
   </properties>
-  
+
   <distributionManagement>
     <snapshotRepository>
-      <id>sonatype-nexus-snapshots</id>
-      <name>Sonatype Nexus Snapshots</name>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <id>artifact-registry</id>
+      <url>artifactregistry://us-central1-maven.pkg.dev/camio-dev/camio-natty</url>
     </snapshotRepository>
-    
     <repository>
-      <id>sonatype-nexus-staging</id>
-      <name>Nexus Release Repository</name>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+      <id>artifact-registry</id>
+      <url>artifactregistry://us-central1-maven.pkg.dev/camio-dev/camio-natty</url>
     </repository>
   </distributionManagement>
-  
+
+  <repositories>
+    <repository>
+      <id>artifact-registry</id>
+      <url>artifactregistry://us-central1-maven.pkg.dev/camio-dev/camio-natty</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
   <build>
+    <extensions>
+      <extension>
+        <groupId>com.google.cloud.artifactregistry</groupId>
+        <artifactId>artifactregistry-maven-wagon</artifactId>
+        <version>2.1.0</version>
+      </extension>
+    </extensions>
+
     <plugins>
 
       <!-- automatically release to maven central without manual Sonatype promotion -->
-      <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <version>1.6.7</version>
-        <extensions>true</extensions>
-        <configuration>
-          <serverId>ossrh</serverId>
-          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-          <autoReleaseAfterClose>true</autoReleaseAfterClose>
-        </configuration>
-      </plugin>
-      
+<!--      <plugin>-->
+<!--        <groupId>org.sonatype.plugins</groupId>-->
+<!--        <artifactId>nexus-staging-maven-plugin</artifactId>-->
+<!--        <version>1.6.7</version>-->
+<!--        <extensions>true</extensions>-->
+<!--        <configuration>-->
+<!--          <serverId>ossrh</serverId>-->
+<!--          <nexusUrl>https://oss.sonatype.org/</nexusUrl>-->
+<!--          <autoReleaseAfterClose>true</autoReleaseAfterClose>-->
+<!--        </configuration>-->
+<!--      </plugin>-->
+
       <!-- need to force a new version of the release plugin for git support-->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -98,7 +116,7 @@
         <configuration>
           <filesets>
             <fileset>
-              <directory>src/main/java/com/joestelmach/natty/generated</directory>
+              <directory>src/main/java/com/camio/natty/generated</directory>
               <includes>
                 <include>**/*.java</include>
               </includes>
@@ -122,14 +140,14 @@
             </goals>
             <configuration>
               <debug>true</debug>
-              <libDirectory>src/main/antlr3/com/joestelmach/natty/generated/imports</libDirectory>
+              <libDirectory>src/main/antlr3/com/camio/natty/generated/imports</libDirectory>
               <outputDirectory>src/main/java</outputDirectory>
               <includes>
-                <include>com/joestelmach/natty/generated/DateLexer.g</include> 
-                <include>com/joestelmach/natty/generated/DateParser.g</include> 
+                <include>com/camio/natty/generated/DateLexer.g</include>
+                <include>com/camio/natty/generated/DateParser.g</include>
               </includes>
               <excludes>
-                <exclude>com/joestelmach/natty/generated/imports/NumericRules.g</exclude> 
+                <exclude>com/camio/natty/generated/imports/NumericRules.g</exclude>
               </excludes>
             </configuration>
           </execution>
@@ -142,11 +160,11 @@
             <configuration>
               <debug>false</debug>
               <outputDirectory>src/main/java</outputDirectory>
-              <libDirectory>src/main/antlr3/com/joestelmach/natty/generated/imports</libDirectory>
+              <libDirectory>src/main/antlr3/com/camio/natty/generated/imports</libDirectory>
               <excludes>
-                <exclude>com/joestelmach/natty/generated/DateLexer.g</exclude> 
-                <exclude>com/joestelmach/natty/generated/DateParser.g</exclude> 
-                <exclude>com/joestelmach/natty/generated/imports/NumericRules.g</exclude> 
+                <exclude>com/camio/natty/generated/DateLexer.g</exclude>
+                <exclude>com/camio/natty/generated/DateParser.g</exclude>
+                <exclude>com/camio/natty/generated/imports/NumericRules.g</exclude>
               </excludes>
             </configuration>
           </execution>

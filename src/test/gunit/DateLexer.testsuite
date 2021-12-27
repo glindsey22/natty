@@ -1,5 +1,5 @@
 gunit Date;
-@header{package com.joestelmach.natty.generated;}
+@header{package com.camio.natty.generated;}
 
 JANUARY:
 "january" OK
