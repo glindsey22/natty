@@ -44,18 +44,18 @@
   <distributionManagement>
     <snapshotRepository>
       <id>artifact-registry</id>
-      <url>artifactregistry://us-central1-maven.pkg.dev/camio-dev/camio-natty</url>
+      <url>artifactregistry://us-central1-maven.pkg.dev/camio-dev/camio-java</url>
     </snapshotRepository>
     <repository>
       <id>artifact-registry</id>
-      <url>artifactregistry://us-central1-maven.pkg.dev/camio-dev/camio-natty</url>
+      <url>artifactregistry://us-central1-maven.pkg.dev/camio-dev/camio-java</url>
     </repository>
   </distributionManagement>
 
   <repositories>
     <repository>
       <id>artifact-registry</id>
-      <url>artifactregistry://us-central1-maven.pkg.dev/camio-dev/camio-natty</url>
+      <url>artifactregistry://us-central1-maven.pkg.dev/camio-dev/camio-java</url>
       <releases>
         <enabled>true</enabled>
       </releases>
